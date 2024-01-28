@@ -11,6 +11,8 @@ builder.Services.Configure<DatabaseSettings>(builder.Configuration.GetSection("D
 
 builder.Services.AddScoped<ICategoryService, CategoryService>();
 builder.Services.AddScoped<ICourseService, CourseService>();
+//builder.Services.AddScoped<IDatabaseSettings, DatabaseSettings>();
+
 
 builder.Services.AddControllers();
 
