@@ -16,6 +16,9 @@ builder.Services.AddSingleton<IDatabaseSettings>(sp =>
     return sp.GetRequiredService<IOptions<IDatabaseSettings>>().Value;
 });
 
+builder.Services.AddSingleton<CategoryService>();
+builder.Services.AddSingleton<CourseService>();
+
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
 {
     options.Authority = builder.Configuration["IdentityServerURL"];

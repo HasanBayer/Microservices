@@ -3,6 +3,7 @@ using FreeCourse.Services.Catalog.Dtos;
 using FreeCourse.Services.Catalog.Models;
 using FreeCourse.Services.Catalog.Settings;
 using FreeCourse.Shared.Dtos;
+using Microsoft.Extensions.Options;
 using MongoDB.Driver;
 
 namespace FreeCourse.Services.Catalog.Services
@@ -13,15 +14,22 @@ namespace FreeCourse.Services.Catalog.Services
         private readonly IMongoCollection<Category> _categoryCollection;
         private readonly IMapper _mapper;
 
-        public CourseService(IMapper mapper, IDatabaseSettings databaseSettings)
+
+        public CourseService(IMapper mapper, IOptions<DatabaseSettings> databaseSettings)
         {
-            var client = new MongoClient(databaseSettings.ConnectionString);
-            var database = client.GetDatabase(databaseSettings.DatabaseName);
-            _courseCollection = database.GetCollection<Course>(databaseSettings.CourseCollectionName);
+            var mongoClient = new MongoClient(
+                databaseSettings.Value.ConnectionString);
+
+            var mongoDatabase = mongoClient.GetDatabase(
+                databaseSettings.Value.DatabaseName);
+
+            _courseCollection = mongoDatabase.GetCollection<Course>(
+                databaseSettings.Value.CategoryCollectionName);
+
             _mapper = mapper;
+
         }
-
-
+        
         public async Task<Response<List<CourseDto>>> GetAllAsync()
         {
             var courses = await _courseCollection.Find(course => true).ToListAsync();
