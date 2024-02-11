@@ -3,6 +3,7 @@ using FreeCourse.Services.Catalog.Dtos;
 using FreeCourse.Services.Catalog.Models;
 using FreeCourse.Services.Catalog.Settings;
 using FreeCourse.Shared.Dtos;
+using Microsoft.Extensions.Options;
 using MongoDB.Driver;
 
 namespace FreeCourse.Services.Catalog.Services
@@ -12,14 +13,21 @@ namespace FreeCourse.Services.Catalog.Services
         private readonly IMongoCollection<Category> _categoryCollection;
         private readonly IMapper _mapper;
 
-        public CategoryService(IMapper mapper,IDatabaseSettings databaseSettings)
+        public CategoryService(IMapper mapper, IOptions<DatabaseSettings> databaseSettings)
         {
-            var client = new MongoClient(databaseSettings.ConnectionString);
-            var database = client.GetDatabase(databaseSettings.DatabaseName);
-            _categoryCollection = database.GetCollection<Category>(databaseSettings.CategoryCollectionName);
-            _mapper = mapper;
-        }
+            var mongoClient = new MongoClient(
+                databaseSettings.Value.ConnectionString);
 
+            var mongoDatabase = mongoClient.GetDatabase(
+                databaseSettings.Value.DatabaseName);
+
+            _categoryCollection = mongoDatabase.GetCollection<Category>(
+                databaseSettings.Value.CategoryCollectionName);
+
+            _mapper = mapper;
+            
+        }
+     
         public async Task<Response<List<CategoryDto>>> GetAllAsync()
         {
             var categories = await _categoryCollection.Find(category=>true).ToListAsync();

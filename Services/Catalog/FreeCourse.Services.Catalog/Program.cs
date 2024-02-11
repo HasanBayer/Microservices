@@ -1,6 +1,5 @@
 using FreeCourse.Services.Catalog.Services;
 using FreeCourse.Services.Catalog.Settings;
-using Microsoft.Extensions.Options;
 using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -8,11 +7,10 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
 
-builder.Services.Configure<DatabaseSettings>(builder.Configuration.GetSection("DatabaseSettings"));
-builder.Services.AddSingleton<IDatabaseSettings>(sp =>
-{
-    return sp.GetRequiredService<IOptions<IDatabaseSettings>>().Value;
-});
+builder.Services.Configure<DatabaseSettings>(builder.Configuration.GetSection("CatalogDatabaseSettings"));
+
+builder.Services.AddSingleton<CategoryService>();
+builder.Services.AddSingleton<CourseService>();
 
 builder.Services.AddScoped<ICategoryService, CategoryService>();
 builder.Services.AddScoped<ICourseService, CourseService>();
