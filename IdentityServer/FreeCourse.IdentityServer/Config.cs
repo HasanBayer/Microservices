@@ -12,8 +12,8 @@ namespace FreeCourse.IdentityServer
     {
         public static IEnumerable<ApiResource> ApiResources => new ApiResource[]
         {
-            new ApiResource("recourse_catalog"){Scopes={"catalog_fullpermission"}},
-            new ApiResource("recourse_photo_stock"){Scopes={"photo_stock_fullpermission"}}
+            new ApiResource("resource_catalog"){Scopes={"catalog_fullpermission"}},
+            new ApiResource("resource_photo_stock"){Scopes={"photo_stock_fullpermission"}}
         };
         public static IEnumerable<IdentityResource> IdentityResources =>
                    new IdentityResource[]
