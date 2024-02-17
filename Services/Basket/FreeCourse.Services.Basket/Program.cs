@@ -18,6 +18,7 @@ builder.Services.AddSingleton<RedisService>(sp =>
 builder.Services.AddSingleton<BasketService>();
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<ISharedIdentityService,SharedIdentityService>();
+builder.Services.AddScoped<IBasketService,BasketService>();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
