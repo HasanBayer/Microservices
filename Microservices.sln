@@ -30,6 +30,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Basket", "Basket", "{3396B3
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FreeCourse.Services.Basket", "Services\Basket\FreeCourse.Services.Basket\FreeCourse.Services.Basket.csproj", "{A3ECBDC0-DBE7-4B99-850C-4B0A8B776314}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Discount", "Discount", "{78774F78-F711-407E-AC5C-89524B1D8F8D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FreeCourse.Services.Discount", "Services\Discount\FreeCourse.Services.Discount\FreeCourse.Services.Discount.csproj", "{BEF528D5-4031-43A2-8804-9A1DE787BFB1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -56,6 +60,10 @@ Global
 		{A3ECBDC0-DBE7-4B99-850C-4B0A8B776314}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A3ECBDC0-DBE7-4B99-850C-4B0A8B776314}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A3ECBDC0-DBE7-4B99-850C-4B0A8B776314}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BEF528D5-4031-43A2-8804-9A1DE787BFB1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BEF528D5-4031-43A2-8804-9A1DE787BFB1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BEF528D5-4031-43A2-8804-9A1DE787BFB1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BEF528D5-4031-43A2-8804-9A1DE787BFB1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -69,6 +77,8 @@ Global
 		{0C10EC20-56FD-4F12-88FB-ED99138D97E8} = {75224260-B237-453F-B5E4-9AADEA80823E}
 		{3396B3EF-942C-4953-8EAF-EB0D4F90DD30} = {240A5A17-2256-420A-977B-1A6592A5B7E4}
 		{A3ECBDC0-DBE7-4B99-850C-4B0A8B776314} = {3396B3EF-942C-4953-8EAF-EB0D4F90DD30}
+		{78774F78-F711-407E-AC5C-89524B1D8F8D} = {240A5A17-2256-420A-977B-1A6592A5B7E4}
+		{BEF528D5-4031-43A2-8804-9A1DE787BFB1} = {78774F78-F711-407E-AC5C-89524B1D8F8D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {F5F28432-3439-4041-8459-AF065808252C}
