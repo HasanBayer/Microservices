@@ -2,5 +2,10 @@ Services
 	<CatalogAPI> 5011
 	<PhotoStockAPI> 5012
 	<Basket> 5013
+<<<<<<< Updated upstream
+=======
+	<Discount> 5014
+	<Order API>5015
+>>>>>>> Stashed changes
 
 IdentityServer => 5001
