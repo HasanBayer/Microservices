@@ -4,6 +4,4 @@ Services
 	<Basket> 5013
 	<Discount> 5014
 	<Order API>5015
->>>>>>> Stashed changes
-
 IdentityServer => 5001
