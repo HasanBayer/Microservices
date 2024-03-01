@@ -14,10 +14,12 @@ namespace FreeCourse.IdentityServer
     {
         public static IEnumerable<ApiResource> ApiResources => new ApiResource[]
         {
-            new ApiResource("resource_catalog"){Scopes={"catalog_fullpermission"}},            
+            new ApiResource("resource_catalog"){Scopes={"catalog_fullpermission"}},
             new ApiResource("resource_photo_stock"){Scopes={"photo_stock_fullpermission"}},
             new ApiResource("resource_basket"){Scopes={"basket_fullpermission"}},
             new ApiResource("resource_discount"){Scopes={"discount_fullpermission"}},
+            new ApiResource("resource_order"){Scopes={"order_fullpermission"}},
+
 
         };
         public static IEnumerable<IdentityResource> IdentityResources =>
@@ -37,6 +39,8 @@ namespace FreeCourse.IdentityServer
                 new ApiScope("photo_stock_fullpermission","PhotoStock API için Full Erişim"),
                 new ApiScope("basket_fullpermission","Basket API için Full Erişim"),
                 new ApiScope("discount_fullpermission","Discount API için Full Erişim"),
+                new ApiScope("order_fullpermission","Order API için Full Erişim"),
+
 
                 new ApiScope(IdentityServerConstants.LocalApi.ScopeName)
 
@@ -62,7 +66,8 @@ namespace FreeCourse.IdentityServer
                     AllowOfflineAccess=true,
                     ClientSecrets={new Secret("secret".Sha256())},
                     AllowedGrantTypes=GrantTypes.ResourceOwnerPassword,
-                    AllowedScopes={"basket_fullpermission","discount_fullpermission",IdentityServerConstants.StandardScopes.Email,IdentityServerConstants.StandardScopes.OpenId,
+                    AllowedScopes={"basket_fullpermission","discount_fullpermission","order_fullpermission",
+                        IdentityServerConstants.StandardScopes.Email,IdentityServerConstants.StandardScopes.OpenId,
                         IdentityServerConstants.StandardScopes.Profile,
                         IdentityServerConstants.StandardScopes.OfflineAccess,IdentityServerConstants.LocalApi.ScopeName,"roles"},
                     AccessTokenLifetime=1*60*60,
