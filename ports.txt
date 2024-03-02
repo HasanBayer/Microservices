@@ -4,4 +4,5 @@ Services
 	<Basket> 5013
 	<Discount> 5014
 	<Order API>5015
+	<FakePayment>5016
 IdentityServer => 5001
