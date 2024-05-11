@@ -37,7 +37,7 @@ namespace FreeCourse.Web.Services
             throw new NotImplementedException();
         }
 
-        public async Task<Response<bool>> Signin(SigninInput signinInput)
+        public async Task<Response<bool>> SignIn(SigninInput signinInput)
         {
             var disco = await _httpClient.GetDiscoveryDocumentAsync(new DiscoveryDocumentRequest
             {
