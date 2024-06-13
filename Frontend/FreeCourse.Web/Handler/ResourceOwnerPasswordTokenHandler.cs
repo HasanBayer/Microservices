@@ -31,11 +31,16 @@ namespace FreeCourse.Web.Handler
                     request.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", tokenResponse.AccessToken);
                     response = await base.SendAsync(request, cancellationToken);
                 }
+                else
+                {
+                    throw new UnAuthorizeException();
+
+                }
             }
-            if (response.StatusCode == System.Net.HttpStatusCode.Unauthorized)
-            {
-                throw new UnAuthorizeException();
-            }
+            //if (response.StatusCode == System.Net.HttpStatusCode.Unauthorized)
+            //{
+            //    throw new UnAuthorizeException();
+            //}
             return response;
         }
     }

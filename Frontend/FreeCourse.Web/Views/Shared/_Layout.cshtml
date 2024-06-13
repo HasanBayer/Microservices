@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@using IdentityModel;
+@model UserViewModel
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -21,11 +23,22 @@
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>                        
+                        </li>
                     </ul>
-                    @if (User.Identity.IsAuthenticated)
+                    @if(User.Identity.IsAuthenticated)
                     {
-                        
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                @User.Identity.Name
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" asp-controller="User" asp-action="Index">Profil</a></li>
+                                <li><a class="dropdown-item" href="#">Another action</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" asp-controller="Auth" asp-action="LogOut">Çıkış</a></li>
+                            </ul>
+                        </li>
+
                     }
                     else
                     {
