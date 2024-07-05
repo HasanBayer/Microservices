@@ -4,6 +4,10 @@ using FreeCourse.Web.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace FreeCourse.Web.Controllers
 {
@@ -28,6 +32,13 @@ namespace FreeCourse.Web.Controllers
         {
             var categories = await _catalogService.GetAllCategoryAsync();
 
+            if (categories == null || !categories.Any())
+            {
+                // Hata mesajı veya uygun bir işlem
+                ModelState.AddModelError(string.Empty, "Kategoriler yüklenemedi.");
+                return View();
+            }
+
             ViewBag.categoryList = new SelectList(categories, "Id", "Name");
 
             return View();
@@ -49,9 +60,9 @@ namespace FreeCourse.Web.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        //public async Task<IActionResult> Update(string courseId)
+        //public async Task<IActionResult> Update(string id)
         //{
-        //    var course = await _catalogService.GetByCourseId(courseId);
+        //    var course = await _catalogService.GetByCourseId(id);
         //    var categories = await _catalogService.GetAllCategoryAsync();
 
         //    if (course == null)
@@ -75,7 +86,7 @@ namespace FreeCourse.Web.Controllers
         //    return View(courseUpdateInput);
         //}
 
-        [HttpPut]
+        [HttpPost]
         public async Task<IActionResult> Update(CourseUpdateInput courseUpdateInput)
         {
             var categories = await _catalogService.GetAllCategoryAsync();
@@ -88,7 +99,7 @@ namespace FreeCourse.Web.Controllers
 
             return RedirectToAction(nameof(Index));
         }
-        [HttpDelete]
+
         public async Task<IActionResult> Delete(string id)
         {
             await _catalogService.DeleteCourseAsync(id);

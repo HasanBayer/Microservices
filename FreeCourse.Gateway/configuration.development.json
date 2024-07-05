@@ -13,7 +13,7 @@
       "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete" ],
       "UpstreamScheme": "http",
       "AuthenticationOptions": {
-        "AuthenticationProviderKeys": [ "GatewayAuthenticationScheme" ],
+        "AuthenticationProviderKey": "GatewayAuthenticationScheme",
         "AllowedScopes": [ "catalog_fullpermission" ]
       }
     },
@@ -30,10 +30,9 @@
       "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete" ],
       "UpstreamScheme": "http",
       "AuthenticationOptions": {
-        "AuthenticationProviderKeys": [ "GatewayAuthenticationScheme" ],
+        "AuthenticationProviderKey": "GatewayAuthenticationScheme",
         "AllowedScopes": [ "photo_stock_fullpermission" ]
       }
-
     },
     {
       "DownstreamPathTemplate": "/api/{everything}",
@@ -48,7 +47,7 @@
       "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete" ],
       "UpstreamScheme": "http",
       "AuthenticationOptions": {
-        "AuthenticationProviderKeys": [ "GatewayAuthenticationScheme" ],
+        "AuthenticationProviderKey": "GatewayAuthenticationScheme",
         "AllowedScopes": [ "basket_fullpermission" ]
       }
     },
@@ -64,9 +63,9 @@
       "UpstreamPathTemplate": "/services/discount/{everything}",
       "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete" ],
       "UpstreamScheme": "http",
+      "DelegatingHandlers": [ "TokenExhangeDelegateHandler" ],
       "AuthenticationOptions": {
-        "AuthenticationProviderKeys": [ "GatewayAuthenticationScheme" ],
-        "AllowedScopes": [ "discount_fullpermission" ]
+        "AuthenticationProviderKey": "GatewayAuthenticationScheme"
       }
     },
     {
@@ -82,7 +81,7 @@
       "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete" ],
       "UpstreamScheme": "http",
       "AuthenticationOptions": {
-        "AuthenticationProviderKeys": [ "GatewayAuthenticationScheme" ],
+        "AuthenticationProviderKey": "GatewayAuthenticationScheme",
         "AllowedScopes": [ "order_fullpermission" ]
       }
     },
@@ -98,12 +97,11 @@
       "UpstreamPathTemplate": "/services/fakepayment/{everything}",
       "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete" ],
       "UpstreamScheme": "http",
+      "DelegatingHandlers": [ "TokenExhangeDelegateHandler" ],
       "AuthenticationOptions": {
-        "AuthenticationProviderKeys": [ "GatewayAuthenticationScheme" ],
-        "AllowedScopes": [ "payment_fullpermission" ]
+        "AuthenticationProviderKey": "GatewayAuthenticationScheme"
       }
     }
-
   ],
   "GlobalConfiguration": {
     "BaseUrl": "http://localhost:5000"

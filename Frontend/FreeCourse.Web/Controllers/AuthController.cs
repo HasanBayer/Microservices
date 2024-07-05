@@ -3,6 +3,10 @@ using FreeCourse.Web.Services.Interfaces;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace FreeCourse.Web.Controllers
 {
@@ -15,32 +19,35 @@ namespace FreeCourse.Web.Controllers
             _identityService = identityService;
         }
 
-        //public IActionResult SignIn()
-        //{
-        //    return View();
-        //}
+        public IActionResult SignIn()
+        {
+            return View();
+        }
+
+        [HttpPost]
         public async Task<IActionResult> SignIn(SigninInput signinInput)
         {
-            if(!ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
                 return View();
             }
-            var response =await _identityService.SignIn(signinInput);
 
-            if(!response.IsSuccessful)
+            var response = await _identityService.SignIn(signinInput);
+
+            if (!response.IsSuccessful)
             {
                 response.Errors.ForEach(x =>
                 {
-                    ModelState.AddModelError(string.Empty, x);
+                    ModelState.AddModelError(String.Empty, x);
                 });
+
                 return View();
             }
+
             return RedirectToAction(nameof(Index), "Home");
-
-
         }
 
-        public async Task<IActionResult> LogOut()
+        public async Task<IActionResult> Logout()
         {
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             await _identityService.RevokeRefreshToken();
