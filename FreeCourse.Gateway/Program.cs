@@ -1,61 +1,33 @@
-using System.IO;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Hosting;
+using FreeCourse.Gateway.DelegateHandlers;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Options;
-using Ocelot.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Ocelot.DependencyInjection;
 using Ocelot.Middleware;
 using Ocelot.Values;
 
-namespace OcelotBasic
+var builder = WebApplication.CreateBuilder(args);
+
+builder.Configuration.AddJsonFile($"configuration.{builder.Environment.EnvironmentName.ToLower()}.json");
+
+
+builder.Services.AddHttpClient<TokenExhangeDelegateHandler>();
+builder.Services.AddAuthentication().AddJwtBearer("GatewayAuthenticationScheme", options =>
 {
-    public class Program
-    {
-        public void ConfigureServices(IServiceCollection services)
-        {
-            var authenticationProviderKey = "GatewayAuthenticationScheme";
-            services.AddAuthentication().AddJwtBearer(authenticationProviderKey, options =>
-                 {
-                     options.Authority = "IdentityServerURL";
-                     options.Audience = "resource_gateway";
-                     options.RequireHttpsMetadata = false;
-                 });
-            services.AddOcelot();
-        }
+    options.Authority = builder.Configuration["IdentityServerURL"];
+    options.Audience = "resource_gateway";
+    options.RequireHttpsMetadata = false;
+});
+
+builder.Services.AddOcelot().AddDelegatingHandler<TokenExhangeDelegateHandler>();
+
+var app = builder.Build();
+
+// Configure the HTTP request pipeline.
 
 
-        public static void Main(string[] args)
-        {
-            new WebHostBuilder()
-            .UseKestrel()
-            .UseContentRoot(Directory.GetCurrentDirectory())
-            .ConfigureAppConfiguration((hostingContext, config) =>
-            {
-                config
-                    .SetBasePath(hostingContext.HostingEnvironment.ContentRootPath)
-                    .AddJsonFile("appsettings.json", true, true)
-                    .AddJsonFile($"configuration.{hostingContext.HostingEnvironment.EnvironmentName}.json", true, true)
-                    //.AddJsonFile("ocelot.json")
-                    .AddEnvironmentVariables();
-            })
-
-
-
-
-            .ConfigureLogging((hostingContext, logging) =>
-            {
-                //add your logging
-            })
-            .UseIISIntegration()
-            .Configure(app =>
-            {
-
-                app.UseOcelot();
-            })
-            .Build()
-            .Run();
-        }
-    }
-}
+app.UseAuthorization();
+app.UseDeveloperExceptionPage();
+app.MapControllers();
+await app.UseOcelot();
+app.Run();

@@ -24,7 +24,9 @@ namespace FreeCourse.Services.Catalog.Services
                 databaseSettings.Value.DatabaseName);
 
             _courseCollection = mongoDatabase.GetCollection<Course>(
-                databaseSettings.Value.CategoryCollectionName);
+                databaseSettings.Value.CourseCollectionName);
+
+            _categoryCollection = mongoDatabase.GetCollection<Category>(databaseSettings.Value.CategoryCollectionName);
 
             _mapper = mapper;
 
