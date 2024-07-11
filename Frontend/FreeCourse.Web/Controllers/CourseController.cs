@@ -25,7 +25,7 @@ namespace FreeCourse.Web.Controllers
 
         public async Task<IActionResult> Index()
         {
-            return View(await _catalogService.GetAllCourseGetByUserIdAsync(_sharedIdentityService.GetUserId));
+            return View(await _catalogService.GetAllCourseByUserIdAsync(_sharedIdentityService.GetUserId));
         }
 
         public async Task<IActionResult> Create()
@@ -59,33 +59,31 @@ namespace FreeCourse.Web.Controllers
 
             return RedirectToAction(nameof(Index));
         }
+        public async Task<IActionResult> Update(string id)
+        {
+            var course = await _catalogService.GetByCourseId(id);
+            var categories = await _catalogService.GetAllCategoryAsync();
 
-        //public async Task<IActionResult> Update(string id)
-        //{
-        //    var course = await _catalogService.GetByCourseId(id);
-        //    var categories = await _catalogService.GetAllCategoryAsync();
+            if (course == null)
+            {
+                //mesaj göster
+                RedirectToAction(nameof(Index));
+            }
+            ViewBag.categoryList = new SelectList(categories, "Id", "Name", course.Id);
+            CourseUpdateInput courseUpdateInput = new()
+            {
+                Id = course.Id,
+                Name = course.Name,
+                Description = course.Description,
+                Price = course.Price,
+                Feature = course.Feature,
+                CategoryId = course.CategoryId,
+                UserId = course.UserId,
+                Picture = course.Picture
+            };
 
-        //    if (course == null)
-        //    {
-        //        //mesaj göster
-        //        RedirectToAction(nameof(Index));
-        //    }
-        //    ViewBag.categoryList = new SelectList(categories, "Id", "Name", course.Id);
-        //    CourseUpdateInput courseUpdateInput = new()
-        //    {
-        //        Id = course.Id,
-        //        Name = course.Name,
-        //        Description = course.Description,
-        //        Price = course.Price,
-        //        Feature = course.Feature,
-        //        CategoryId = course.CategoryId,
-        //        UserId = course.UserId,
-        //        Picture = course.Picture
-        //    };
-
-        //    return View(courseUpdateInput);
-        //}
-
+            return View(courseUpdateInput);
+        }
         [HttpPost]
         public async Task<IActionResult> Update(CourseUpdateInput courseUpdateInput)
         {
