@@ -19,5 +19,7 @@ namespace FreeCourse.Web.Models.Catalogs
         [Display(Name = "Kurs Kategori")]
         [Required]
         public string? CategoryId { get; set; }
+        [Display(Name ="Kurs Görsel")]
+        public IFormFile PhotoFormFile { get; set; }
     }
 }
