@@ -1,10 +1,12 @@
 using FreeCourse.Shared.Services;
+using FreeCourse.Web.Extensions;
 using FreeCourse.Web.Handler;
 using FreeCourse.Web.Helpers;
 using FreeCourse.Web.Models;
 using FreeCourse.Web.Services;
 using FreeCourse.Web.Services.Interfaces;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using System.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,24 +19,27 @@ builder.Services.AddScoped<ResourceOwnerPasswordTokenHandler>();
 builder.Services.AddScoped<ClientCredentialTokenHandler>();
 builder.Services.AddScoped<ISharedIdentityService, SharedIdentityService>();
 
-builder.Services.AddHttpClient<IIdentityService, IdentityService>();
-builder.Services.AddHttpClient<IClientCredentialTokenService, ClientCredentialTokenService>();
-var serviceApiSettings = builder.Configuration.GetSection("ServiceApiSettings").Get<ServiceApiSettings>();
+//builder.Services.AddHttpClient<IIdentityService, IdentityService>();
+//builder.Services.AddHttpClient<IClientCredentialTokenService, ClientCredentialTokenService>();
+//var serviceApiSettings = builder.Configuration.GetSection("ServiceApiSettings").Get<ServiceApiSettings>();
 
-builder.Services.AddHttpClient<IUserService, UserService>(opt =>
-{
-    opt.BaseAddress = new Uri(serviceApiSettings.BaseUrl);
-}).AddHttpMessageHandler<ResourceOwnerPasswordTokenHandler>();
-builder.Services.AddHttpClient<ICatalogService, CatalogService>(opt =>
-{
-    opt.BaseAddress = new Uri($"{serviceApiSettings.GatewayUrl}/{serviceApiSettings.Catalog.Path}");
-}).AddHttpMessageHandler<ClientCredentialTokenHandler>();
-
-builder.Services.AddHttpClient<IPhotoStockService, PhotoStockService>(opt =>
-{
-    opt.BaseAddress = new Uri($"{serviceApiSettings.GatewayUrl}/{serviceApiSettings.PhotoStock.Path}");
-}).AddHttpMessageHandler<ClientCredentialTokenHandler>();
-
+//builder.Services.AddHttpClient<IUserService, UserService>(opt =>
+//{
+//    opt.BaseAddress = new Uri(serviceApiSettings.BaseUrl);
+//}).AddHttpMessageHandler<ResourceOwnerPasswordTokenHandler>();
+//builder.Services.AddHttpClient<ICatalogService, CatalogService>(opt =>
+//{
+//    opt.BaseAddress = new Uri($"{serviceApiSettings.GatewayUrl}/{serviceApiSettings.Catalog.Path}");
+//}).AddHttpMessageHandler<ClientCredentialTokenHandler>();
+//builder.Services.AddHttpClient<IPhotoStockService, PhotoStockService>(opt =>
+//{
+//    opt.BaseAddress = new Uri($"{serviceApiSettings.GatewayUrl}/{serviceApiSettings.PhotoStock.Path}");
+//}).AddHttpMessageHandler<ClientCredentialTokenHandler>();
+//builder.Services.AddHttpClient<IBasketService, BasketService>(opt =>
+//{
+//    opt.BaseAddress = new Uri($"{serviceApiSettings.GatewayUrl}/{serviceApiSettings.Basket.Path}");
+//}).AddHttpMessageHandler<ResourceOwnerPasswordTokenHandler>();
+builder.Services.AddHttpClientServices(builder.Configuration);
 
 
 
