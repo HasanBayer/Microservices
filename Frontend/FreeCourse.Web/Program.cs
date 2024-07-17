@@ -1,3 +1,5 @@
+using FluentValidation;
+using FluentValidation.AspNetCore;
 using FreeCourse.Shared.Services;
 using FreeCourse.Web.Extensions;
 using FreeCourse.Web.Handler;
@@ -5,6 +7,7 @@ using FreeCourse.Web.Helpers;
 using FreeCourse.Web.Models;
 using FreeCourse.Web.Services;
 using FreeCourse.Web.Services.Interfaces;
+using FreeCourse.Web.Validators;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using System.Configuration;
 
@@ -39,6 +42,12 @@ builder.Services.AddScoped<ISharedIdentityService, SharedIdentityService>();
 //{
 //    opt.BaseAddress = new Uri($"{serviceApiSettings.GatewayUrl}/{serviceApiSettings.Basket.Path}");
 //}).AddHttpMessageHandler<ResourceOwnerPasswordTokenHandler>();
+
+builder.Services.AddValidatorsFromAssemblyContaining<CourseCreateInputValidator>();
+builder.Services.AddValidatorsFromAssemblyContaining<CourseUpdateInputValidator>();
+
+
+
 builder.Services.AddHttpClientServices(builder.Configuration);
 
 
