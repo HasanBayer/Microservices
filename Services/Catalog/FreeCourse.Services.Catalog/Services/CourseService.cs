@@ -17,14 +17,13 @@ namespace FreeCourse.Services.Catalog.Services
 
         public CourseService(IMapper mapper, IOptions<DatabaseSettings> databaseSettings)
         {
-            var mongoClient = new MongoClient(
-                databaseSettings.Value.ConnectionString);
+            var mongoClient = new MongoClient(databaseSettings.Value.ConnectionString);
 
-            var mongoDatabase = mongoClient.GetDatabase(
-                databaseSettings.Value.DatabaseName);
+            var mongoDatabase = mongoClient.GetDatabase(databaseSettings.Value.DatabaseName);
 
-            _courseCollection = mongoDatabase.GetCollection<Course>(
-                databaseSettings.Value.CategoryCollectionName);
+            _courseCollection = mongoDatabase.GetCollection<Course>(databaseSettings.Value.CourseCollectionName);
+
+            _categoryCollection = mongoDatabase.GetCollection<Category>(databaseSettings.Value.CategoryCollectionName);
 
             _mapper = mapper;
 
@@ -101,13 +100,14 @@ namespace FreeCourse.Services.Catalog.Services
         public async Task<Response<NoContent>> DeleteAsync(string id)
         {
             var result = await _courseCollection.DeleteOneAsync(x => x.Id == id);
+
             if (result.DeletedCount > 0)
             {
                 return Response<NoContent>.Success(204);
             }
             else
             {
-                return Response<NoContent>.Fail("Course Not Found", 404);
+                return Response<NoContent>.Fail("Course not found", 404);
             }
         }
     }

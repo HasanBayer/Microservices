@@ -62,6 +62,9 @@ namespace IdentityServerHost.Quickstart.UI
                 return RedirectToAction("Challenge", "External", new { scheme = vm.ExternalLoginScheme, returnUrl });
             }
 
+            vm.Username = "hasanbayer@gmail.com";
+            vm.Password = "Password123*";
+
             return View(vm);
         }
 
