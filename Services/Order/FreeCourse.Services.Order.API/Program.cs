@@ -1,6 +1,8 @@
+using FreeCourse.Services.Order.Application.Consumers;
 using FreeCourse.Services.Order.Application.Handlers;
 using FreeCourse.Services.Order.Infrastructure;
 using FreeCourse.Shared.Services;
+using MassTransit;
 using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
@@ -16,6 +18,29 @@ using System.Reflection;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+
+builder.Services.AddMassTransit(x =>
+{
+    x.AddConsumer<CreateOrderMessageCommandConsumer>();
+    // RabbitMQ konfigürasyonu
+    //Default Port 5672
+    x.UsingRabbitMq((context, cfg) =>
+    {
+        cfg.Host("localhost", "/", h =>
+        {
+            h.Username("guest");
+            h.Password("guest");
+        });
+        cfg.ReceiveEndpoint("create-order-service", e =>
+        {
+            e.ConfigureConsumer<CreateOrderMessageCommandConsumer>(context);
+        });
+    });
+});
+
+builder.Services.AddMassTransitHostedService();
+
+
 var requireAuthorizePolicy = new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build();
 JsonWebTokenHandler.DefaultInboundClaimTypeMap.Clear(); //Sub'i gostermek için
 
